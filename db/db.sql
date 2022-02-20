@@ -1,17 +1,7 @@
--- DROP DATABASE IF EXISTS db
+--DROP DATABASE IF EXISTS department;
+--DROP DATABASE IF EXISTS role;
+--DROP DATABASE IF EXISTS employees;
 
--- CREATE DATABASE db
+--CREATE DATABASE schema;
 
--- USE database
-
-/*CREATE TABLE employees(
-
-);*/
-
-/*CREATE TABLE role(
-
-);*/
-
-/*CREATE TABLE department(
-
-);*/
+-- USE schema

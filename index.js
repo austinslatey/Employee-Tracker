@@ -1,23 +1,41 @@
 //Import routes
+// const mysql = require('mysql');
+// const inquirer = require('inquirer');
+// const util = require('util');
     /*mysql
     inquirer
     util
-    console.table
+    console.tablea
     */ 
 
 // establish connection
+// const db = mysql.createConnection({
+//     host: 'localhost',
+//     // Your MySQL username,
+//     user: 'root',
+//     // Your MySQL password
+//     password: '',
+//     database: 'schema'
+//   });
+
+//promisfy query connection
+//const query = util.promisify(db.query).bind(connection);
 
 
-//promisfy query 
 
 //connection function serving as a response for console
-
+// db.connect(function (err) {
+//     if (err) console.log(err);
+//     console.log(`connection by id ${db.threadId}`);
+//     onceConnected();
+// });
 
 
 
 //helper functions
 
     //inquirer
+    
 
         //inquirer input
 
@@ -59,3 +77,6 @@
 
 
 
+const onceConnected = () => {
+    getUserChoice();
+}
