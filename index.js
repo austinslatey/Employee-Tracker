@@ -252,7 +252,7 @@ const getUserChoice = () => {
             switch (entered.choice) {
                 case "Select All Employees":
                     viewTheStaff();
-                    getEmployeeList();
+                    
                     break;
                 case "Select Employees By Department":
                     viewDept();

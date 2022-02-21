@@ -39,8 +39,9 @@
   ## License 
   none
 
-  ## Screen-Shots
+  ## Screen-Shots-&-Short-Demo
   [Terminal-Snip](./Assets/New Bitmap Image.bmp)
+  [Demo-Gif](Assets/Demo-gif.gif)
   
 
   ## Questions
