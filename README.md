@@ -40,7 +40,7 @@
   none
 
   ## Screen-Shots-&-Short-Demo
-  [Terminal-Snip](./Assets/New Bitmap Image.bmp)
+  [Terminal-Snip](./Assets/New%20Bitmap%20Image.png)
   [Demo-Gif](Assets/Demo-gif.gif)
   
 
