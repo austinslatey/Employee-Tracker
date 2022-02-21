@@ -9,7 +9,7 @@
   * [Usage](#usage)
   * [Contributions](#contributions)
   * [Tests](#tests)
-  * [Screen-Shots](#screen-shots)
+  * [Screen-Shots-&-Short-Demo](#screen-shots-&-short-demo)
   * [License](#license)
   * [Questions](#questions)
 
