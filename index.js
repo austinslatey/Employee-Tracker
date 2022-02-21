@@ -41,6 +41,10 @@ connection.connect(function (err) {
 
 
 //helper functions
+//get id of employee
+const getEmployeeId = (employee) => {
+    return employee.split(" ")[0];
+}
 
 
 
@@ -52,39 +56,41 @@ connection.connect(function (err) {
 //inquirer list
 
 // turn array of object to array string
+listOfStringsFromArray = (results) => {
+    let arrayList = [];
 
-// get all available departments
-const getDepts = () => {
-    let rows = query("SELCET * FROM dept");
-    return 
+    results = query("SELECT id, first_name, last_name FROM employees");
+    results.forEach(obj => {
+        const object = Object.values(obj).join(" ");
+        arrayList.push(object);
+    });
+    return arrayList;
+}
+
+// get all available departments row's from list
+const getDepts = async () => {
+    try {
+        let deptRows = await query("SELCET * FROM dept");
+        return listOfStringsFromArray(deptRows);
+    } catch (error) {
+        throw error;
+    }
 }
 
 // get all available rows
 
 //get list of employees
-    //getEmployeeList
+getEmployeeList = async () => {
+    let employeeList = [];
+    try {
+        const results = await query("SELECT * FROM dept");
+        employeeList = listOfStringsFromArray(results);
 
-returnListOfStringsFromArray = (results) => {
-    let arrayList = [];
-    
-        const results = query("SELECT id, first_name, last_name FROM employees");
-        results.forEach(obj => {
-            const object = Object.values(obj).join(" ");
-            arrayList.push(object);
-        });
-        return arrayList;
+    } catch (error) {
+        throw error;
     }
-
-    
-
-
-
-
-
-
-
-
-
+    return employeeList;
+}
 
 //main functions
 
@@ -111,6 +117,7 @@ const removeExistingEmployee = async () => {
 
 //add employee
 //inquirer input
+
 const addNewEmployee = async () => {
     return inquirer.prompt([
         {
@@ -181,7 +188,7 @@ getIdByRole = (roles) => {
             break;
         default:
             roleIdValue = 0;
-            
+
     }
     return roleIdValue;
 }
@@ -190,6 +197,40 @@ const getIdByManager = () => {
     return 2;
 }
 
+//view all employees
+const viewTheStaff = async () => {
+    let employeesRows = await query(`SELECT employees.id id,
+    employees.first_name first_name,
+    employees.last_name last_name,
+    role.title title,
+    dept.name dept,
+    role.income income
+    FROM employees
+    INNER JOIN dept
+    ON (role.dept_id = dept_id); `);
+    console.table(employeesRows);
+    getUserChoice();
+}
+
+// inquirer prompt to view depts
+//view employees given a dept
+const viewDept = async () => {
+        inquirer.prompt([
+        {
+            type: "list",
+            name: "depts",
+            message: "Here are the departments worth viewing",
+            choices: [
+                "Service", 
+                "Automotive",
+                "Financial",
+                "Legal"
+            ]
+        }
+    ]).then((entered) => {
+        viewDept(getEmployeeId(entered.depts));
+    });    
+} 
 //view employees
 const getUserChoice = () => {
     inquirer.prompt([{
@@ -210,8 +251,11 @@ const getUserChoice = () => {
         .then((entered) => {
             switch (entered.choice) {
                 case "Select All Employees":
+                    viewTheStaff();
+                    getEmployeeList();
                     break;
                 case "Select Employees By Department":
+                    viewDept();
                     break;
                 case "Select Employees By Manager":
                     break;
@@ -232,10 +276,9 @@ const getUserChoice = () => {
         });
 }
 
-// inquirer prompt to view depts
-//view employees given a dept
 
-//update employee role
+
+
 
 //update manager
 //view by manager
