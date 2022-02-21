@@ -9,6 +9,7 @@
   * [Usage](#usage)
   * [Contributions](#contributions)
   * [Tests](#tests)
+  * [Screen-Shots](#screen-shots)
   * [License](#license)
   * [Questions](#questions)
 
@@ -37,6 +38,9 @@
 
   ## License 
   none
+
+  ## Screen-Shots
+  [Terminal-Snip](./Assets/New Bitmap Image.bmp)
   
 
   ## Questions
