@@ -1,28 +1,30 @@
-/*CREATE TABLE department(
-    id INT() NOT NULL AUTO_INCREMENT,
+DROP DATABASE IF EXISTS employees_db;
+
+CREATE DATABASE employees_db;
+
+USE employees_db;
+
+CREATE TABLE dept(
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    NAME VARCHAR(30) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE role(
+    id int(11) NOT NULL AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL,
-    PRIMARY KEY (id)
-
-);*/
-
-
-
-/*CREATE TABLE role(
-    id INT() NOT NULL AUTO_INCREMENT,
-    roles VARCHAR(30) NOT NULL,
     income DECIMAL(12) NOT NULL,
-    dept_id INT() NOT NULL,
+    dept_id INTEGER(11) NOT NULL,
     PRIMARY KEY (id)
+  );
 
-);*/
-
-
-/*CREATE TABLE employees(
-    id INT() NOT NULL AUTO_INCREMENT,
+CREATE TABLE employees(
+    id INTEGER(11) AUTO_INCREMENT,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
+    role_id INTEGER(11) NOT NULL,
+    manager_id INTEGER(11),
     PRIMARY KEY (id)
-
-);*/
+);
 
 

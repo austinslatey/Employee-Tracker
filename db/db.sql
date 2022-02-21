@@ -1,7 +1,7 @@
---DROP DATABASE IF EXISTS department;
---DROP DATABASE IF EXISTS role;
---DROP DATABASE IF EXISTS employees;
 
---CREATE DATABASE schema;
+-- DROP DATABASE IF EXISTS role;
+-- DROP DATABASE IF EXISTS employees;
+
+
 
 -- USE schema
