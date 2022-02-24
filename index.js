@@ -161,6 +161,8 @@ const addNewEmployee = async () => {
     })
 }
 
+
+
 getIdByRole = (roles) => {
     let roleIdValue;
     switch (roles) {
@@ -206,31 +208,58 @@ const viewTheStaff = async () => {
     dept.name dept,
     role.income income
     FROM employees
+    INNER  JOIN role ON employees.role_id = role.id
     INNER JOIN dept
-    ON (role.dept_id = dept_id); `);
+    ON role.dept_id = dept.id; `);
     console.table(employeesRows);
     getUserChoice();
 }
+const viewDepts = async () => {
+    let departments = await query(`SELECT * FROM dept`);
+    console.table(departments);
+    getUserChoice();
 
-// inquirer prompt to view depts
-//view employees given a dept
-const viewDept = async () => {
-        inquirer.prompt([
-        {
-            type: "list",
-            name: "depts",
-            message: "Here are the departments worth viewing",
-            choices: [
-                "Service", 
-                "Automotive",
-                "Financial",
-                "Legal"
-            ]
-        }
-    ]).then((entered) => {
-        viewDept(getEmployeeId(entered.depts));
-    });    
-} 
+}
+
+const getRole = async () => {
+    let role = await query(`SELECT * FROM role`);
+    console.table(role);
+    getUserChoice();
+}
+
+const addNewDepartment = async () => {
+    try {
+        const answers = await inquirer.prompt([
+            {
+                type: "input",
+                name: "name",
+                message: "What is the name of the new department?"
+            }
+        ]);
+        let department = await query(`INSERT INTO dept SET ?`, answers);
+        console.log(department);
+        getUserChoice();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const addNewRole = async () => {
+    try {
+        const answers = await inquirer.prompt([
+            {
+                type: "input",
+                name: "name",
+                message: "What is the name of the new role?"
+            }
+        ]);
+        let role = await query(`INSERT INTO role SET ?`, answers);
+        console.log(role);
+        getUserChoice();
+    } catch (err) {
+        console.log(err);
+    }
+}
 //view employees
 const getUserChoice = () => {
     inquirer.prompt([{
@@ -239,12 +268,16 @@ const getUserChoice = () => {
         message: "What do you want to do?",
         choices: [
             "Select All Employees",
-            "Select Employees By Department",
-            "Select Employees By Manager",
+            "Select All Departments",
+            "Select All Roles",
+            //"Select Employees By Department",
+            //"Select Employees By Manager",
             "Add A New Employee",
-            "Remove An Existing Employee",
+            "Add A New Department",
+            "Add A New Role",
+            //"Remove An Existing Employee",
             "Update An Existing Employee's Role",
-            "Update Employee To Manager",
+            //"Update Employee To Manager",
             "Close Window"
         ]
     }])
@@ -252,15 +285,26 @@ const getUserChoice = () => {
             switch (entered.choice) {
                 case "Select All Employees":
                     viewTheStaff();
-                    
+
+                    break;
+                case "Select All Roles":
+                    getRole();
+                    break;
+                case "Select All Departments":
+                    viewDepts();
                     break;
                 case "Select Employees By Department":
-                    viewDept();
                     break;
                 case "Select Employees By Manager":
                     break;
                 case "Add A New Employee":
                     addNewEmployee();
+                    break;
+                case "Add A New Department":
+                    addNewDepartment();
+                    break;
+                case "Add A New Role":
+                    addNewRole();
                     break;
                 case "Remove An Existing Employee":
                     removeExistingEmployee();
