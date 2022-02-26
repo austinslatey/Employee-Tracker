@@ -153,12 +153,47 @@ const addNewEmployee = async () => {
     ]).then((entered) => {
         const role_id = getIdByRole(entered.roles);
         const manager_id = getIdByManager();
+        console.log(role_id, manager_id, entered);
         connection.query("INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)",
             [entered.first_name, entered.last_name, role_id, manager_id], (err, result) => {
-                console.log(result)
-                console.log(err);
+                console.log("Added into employees ", result);
+                getUserChoice();
+                if (err) throw err;
             });
     })
+};
+
+const addNewRole = async () => {
+    try {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "name",
+                message: "What is the name of the new role?"
+            },
+            {
+                type: "input",
+                name: "income",
+                message: "How much income does this role make annually?"
+
+            },
+            {
+                type: "input",
+                name: "id",
+                message: "What is the department id?"
+            }
+        ]);
+        let answers = await query("INSERT INTO role (title, income, dept_id) VALUES (?,?,?)",
+        [answers.title, answers.income, answers.id], (err, result) => {
+            console.log("Added into roles ", result);
+            getUserChoice();
+            console.log(err)
+        });
+        
+       
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 
@@ -244,22 +279,7 @@ const addNewDepartment = async () => {
     }
 }
 
-const addNewRole = async () => {
-    try {
-        const answers = await inquirer.prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "What is the name of the new role?"
-            }
-        ]);
-        let role = await query(`INSERT INTO role SET ?`, answers);
-        console.log(role);
-        getUserChoice();
-    } catch (err) {
-        console.log(err);
-    }
-}
+
 //view employees
 const getUserChoice = () => {
     inquirer.prompt([{
