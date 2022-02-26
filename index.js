@@ -38,44 +38,35 @@ connection.connect(function (err) {
     onceConnected();
 });
 
-
-
 //helper functions
 //get id of employee
-const getEmployeeId = (employee) => {
-    return employee.split(" ")[0];
-}
-
-
-
-//inquirer
-
-
-//const user
+// const getEmployeeId = (employee) => {
+//     return employee.split(" ")[0];
+// }
 
 //inquirer list
 
 // turn array of object to array string
-listOfStringsFromArray = (results) => {
-    let arrayList = [];
+// listOfStringsFromArray = (results) => {
+//     let arrayList = [];
 
-    results = query("SELECT id, first_name, last_name FROM employees");
-    results.forEach(obj => {
-        const object = Object.values(obj).join(" ");
-        arrayList.push(object);
-    });
-    return arrayList;
-}
+//     results = query("SELECT id, first_name, last_name FROM employees");
+//     results.forEach(obj => {
+//         const object = Object.values(obj).join(" ");
+//         arrayList.push(object);
+//     });
+//     return arrayList;
+// }
 
 // get all available departments row's from list
-const getDepts = async () => {
-    try {
-        let deptRows = await query("SELCET * FROM dept");
-        return listOfStringsFromArray(deptRows);
-    } catch (error) {
-        throw error;
-    }
-}
+// const getDepts = async () => {
+//     try {
+//         let deptRows = await query("SELCET * FROM dept");
+//         return listOfStringsFromArray(deptRows);
+//     } catch (error) {
+//         throw error;
+//     }
+// }
 
 // get all available rows
 
@@ -163,6 +154,7 @@ const addNewEmployee = async () => {
     })
 };
 
+//add new role
 const addNewRole = async () => {
     try {
         inquirer.prompt([
@@ -262,6 +254,7 @@ const getRole = async () => {
     getUserChoice();
 }
 
+//add a new dept
 const addNewDepartment = async () => {
     try {
         const answers = await inquirer.prompt([
@@ -348,9 +341,9 @@ const getUserChoice = () => {
 //view by manager
 
 
-//add a new dept
 
-//add new role
+
+
 
 //Menu
 
