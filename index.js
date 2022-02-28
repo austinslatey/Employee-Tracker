@@ -40,9 +40,65 @@ connection.connect(function (err) {
 
 //helper functions
 //get id of employee
-// const getEmployeeId = (employee) => {
-//     return employee.split(" ")[0];
-// }
+const getEmployeeId = (employee) => {
+    return employee.split(" ")[0];
+}
+
+const findAllRoles = () => {
+    return this.connection.promise().query("SELECT role.id, role.title, department.name AS department, role.income FROM role LEFT JOIN department ON role.department_id = department.id");
+}
+const updateEmployeeRole = () => {
+   
+    viewTheStaff().then(([rows]) => {
+        let employees = rows;
+        const employeeChoices = employees.map(({
+            id, first_name, last_name }) => ({
+                name: `${first_name} ${last_name}`,
+                value: id
+            }));
+        inquirer.prompt([{
+            type: "list",
+            name: "employee_id",
+            message: "Which employees role would you like to update?",
+            choices: employeeChoices
+
+        }]).then((res => {
+            let employee_id = res.employee_id;
+            findAllRoles().then(([rows]) => {
+                let roles = rows;
+                const roleChoices = roles.map(({ id, title }) => ({
+                    name: title,
+                    value: id
+                }));
+                inquirer.prompt([{
+                    type: "list",
+                    name: "role_id",
+                    message: "Which role would you like to update?",
+                    choices: roleChoices
+                }]).then(res => {
+                    updateEmployeeRoleDb(employee_id, role_id);
+                }).then(()=> {
+                    console.log("updated employee role");
+                }).then(() => {
+                    getUserChoice();
+                })
+            })
+        }));
+    })
+
+}
+
+
+const updateEmployeeRoleDb = (employee_id, role_id) => {
+     return this.connection.promise().query("UPDATE employees SET role_id = ? WHERE id = ? ", role_id, getEmployeeId);
+}
+
+
+
+
+const updateManageRole = (manager_id, role_id) => {
+    return this.connection.promise().query("UPDATE employees SET role_id = ? WHERE id = ? ", manager_id,)
+}
 
 //inquirer list
 
@@ -176,13 +232,13 @@ const addNewRole = async () => {
             }
         ]);
         let answers = await query("INSERT INTO role (title, income, dept_id) VALUES (?,?,?)",
-        [answers.title, answers.income, answers.id], (err, result) => {
-            console.log("Added into roles ", result);
-            getUserChoice();
-            console.log(err)
-        });
-        
-       
+            [answers.title, answers.income, answers.id], (err, result) => {
+                console.log("Added into roles ", result);
+                getUserChoice();
+                console.log(err)
+            });
+
+
     } catch (err) {
         console.log(err);
     }
@@ -323,6 +379,7 @@ const getUserChoice = () => {
                     removeExistingEmployee();
                     break;
                 case "Update An Existing Employee's Role":
+                    updateEmployeeRole();
                     break;
                 case "Update Employee To Manager":
                     break;
