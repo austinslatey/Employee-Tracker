@@ -9,10 +9,6 @@ const { get } = require('http');
 
 
 
-
-
-
-
 //establish connection
 let connection = mysql2.createConnection(
     {
@@ -96,9 +92,9 @@ const updateEmployeeRoleDb = (employee_id, role_id) => {
 
 
 
-const updateManageRole = (manager_id, role_id) => {
-    return this.connection.promise().query("UPDATE employees SET role_id = ? WHERE id = ? ", manager_id,)
-}
+// const updateManageRole = (manager_id, role_id) => {
+//     return this.connection.promise().query("UPDATE employees SET role_id = ? WHERE id = ? ", manager_id,)
+// }
 
 //inquirer list
 
